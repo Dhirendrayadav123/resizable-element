@@ -2,52 +2,55 @@
 import './App.css';
 
 function App() {
-  const ele = document.getElementById('resizeMe');
-  const resizers = ele.querySelectorAll('.resizer');
-  [].forEach.call(resizers, function (resizer) {
-    resizer.addEventListener('mousedown', mouseDownHandler);
-});
+  const el = document.querySelector(".item");
+  
+const resizers = document.querySelectorAll(".resizer");
+let currentResizer;
 
-  // The current position of mouse
-  let x = 0;
-  let y = 0;
-  
-  // The dimension of the element
-  let w = 0;
-  let h = 0;
+for (let resizer of resizers) {
+  resizer.addEventListener("mousedown", mousedown);
 
-  // Handle the mousedown event
-  // that's triggered when user drags the resizer
-  const mouseDownHandler = function (e) {
-      // Get the current mouse position
-      x = e.clientX;
-      y = e.clientY;
-  
-      // Calculate the dimension of element
-      const styles = window.getComputedStyle(ele);
-      w = parseInt(styles.width, 10);
-      h = parseInt(styles.height, 10);
-  
-      // Attach the listeners to `document`
-      document.addEventListener('mousemove', mouseMoveHandler);
-      document.addEventListener('mouseup', mouseUpHandler);
-  };
-  
-  const mouseMoveHandler = function (e) {
-      // How far the mouse has been moved
-      const dx = e.clientX - x;
-      const dy = e.clientY - y;
-  
-      // Adjust the dimension of element
-      ele.style.width = `${w + dx}px`;
-      ele.style.height = `${h + dy}px`;
-  };
-  
-  const mouseUpHandler = function () {
-      // Remove the handlers of `mousemove` and `mouseup`
-      document.removeEventListener('mousemove', mouseMoveHandler);
-      document.removeEventListener('mouseup', mouseUpHandler);
-  };
+  function mousedown(e) {
+    currentResizer = e.target;
+
+    let prevX = e.clientX;
+    let prevY = e.clientY;
+
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
+
+    function mousemove(e) {
+      const rect = el.getBoundingClientRect();
+
+      if (currentResizer.classList.contains("resizer-t")) {
+        
+        el.style.height = rect.height - (prevY - e.clientY) + "px";
+      } else if (currentResizer.classList.contains("resizer-r")) {
+        el.style.width = rect.width + (prevX - e.clientX) + "px";
+        
+        el.style.left = rect.left - (prevX - e.clientX) + "px";
+      } else if (currentResizer.classList.contains("resizer-l")) {
+        el.style.width = rect.width - (prevX - e.clientX) + "px";
+        
+        el.style.top = rect.top - (prevY - e.clientY) + "px";
+      } else {
+        
+        el.style.height = rect.height + (prevY - e.clientY) + "px";
+        el.style.top = rect.top - (prevY - e.clientY) + "px";
+        
+      }
+
+      prevX = e.clientX;
+      prevY = e.clientY;
+    }
+
+    function mouseup() {
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+     
+    }
+  }
+}
 
 
   return (  
