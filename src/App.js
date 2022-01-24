@@ -8,10 +8,10 @@ function App() {
  return(
    <div className='container'>
       <div className='C1C2-container'>
-          <div className='col-4'>
+          <div className='C1'>
               <Component1/>
           </div>
-          <div className='col-8'>
+          <div className='C2'>
               <Component2/>
           </div>
       </div>
