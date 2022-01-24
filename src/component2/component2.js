@@ -1,7 +1,7 @@
 import './component2.css';
 
 const Component2=()=>{
-    const el = document.querySelector(".resizable2");
+    const el2 = document.querySelector(".resizable2");
   
 const resizers = document.querySelectorAll(".resizer");
 let currentResizer2;
@@ -19,21 +19,21 @@ for (let resizer of resizers) {
     window.addEventListener("mouseup", mouseup);
 
     function mousemove(e) {
-      const rect = el.getBoundingClientRect();
+      const rect = el2.getBoundingClientRect();
 
       if (currentResizer2.classList.contains("resizer-r")) {
-        el.style.width = rect.width - (prevX - e.clientX) + "px";
+        el2.style.width = rect.width - (prevX - e.clientX) + "px";
       }
        else if (currentResizer2.classList.contains("resizer-b")) {
-        el.style.height = rect.height - (prevY - e.clientY) + "px"; 
+        el2.style.height = rect.height - (prevY - e.clientY) + "px"; 
       }
        else if (currentResizer2.classList.contains("resizer-t")) {
-        el.style.height = rect.height + (prevY - e.clientY) + "px";
-        el.style.top = rect.top - (prevY - e.clientY) + "px";
+        el2.style.height = rect.height + (prevY - e.clientY) + "px";
+        el2.style.top = rect.top - (prevY - e.clientY) + "px";
       }
       else {
-        el.style.width = rect.width + (prevX - e.clientX) + "px";
-        el.style.left = rect.left - (prevX - e.clientX) + "px";
+        el2.style.width = rect.width + (prevX - e.clientX) + "px";
+        el2.style.left = rect.left - (prevX - e.clientX) + "px";
       }
 
       prevX = e.clientX;
